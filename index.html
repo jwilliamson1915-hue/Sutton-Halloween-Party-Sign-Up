@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mr. Sutton's Class Halloween Party Sign-Up</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Griffy&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --plum: #2a1450;
+    --plum-deep: #1c0d38;
+    --pumpkin: #ff7a1a;
+    --slime: #9be564;
+    --bone: #f7f4ff;
+    --mist: #cfc4ec;
+    --berry: #ff5d8f;
+    --display: "Griffy", "Chalkboard SE", "Comic Sans MS", cursive;
+    --body: "Fredoka", "Trebuchet MS", system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-padding-top: 1rem; }
+  body {
+    margin: 0;
+    background: var(--plum);
+    background-image:
+      radial-gradient(circle at 12% 8%, rgba(255,122,26,.18), transparent 38%),
+      radial-gradient(circle at 92% 30%, rgba(155,229,100,.10), transparent 34%);
+    color: var(--bone);
+    font-family: var(--body);
+    font-size: 1.05rem;
+    line-height: 1.55;
+  }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 0 1.1rem 4rem; }
+
+  /* Hero */
+  header { padding: 2.6rem 0 1.4rem; text-align: center; }
+  .bats { font-size: 1.6rem; letter-spacing: .5rem; opacity: .9; }
+  h1 {
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: clamp(2.4rem, 8vw, 4.4rem);
+    line-height: 1.02;
+    margin: .4rem 0 .5rem;
+    color: var(--pumpkin);
+    text-shadow: 0 3px 0 var(--plum-deep);
+  }
+  .sub { margin: 0 auto; max-width: 34rem; color: var(--mist); font-size: 1.15rem; }
+
+  h2 {
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: 1.9rem;
+    margin: 0 0 .7rem;
+    color: var(--slime);
+  }
+
+  /* Party facts */
+  .facts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: .8rem;
+    margin: 1.6rem 0 1.2rem;
+  }
+  .fact {
+    background: var(--plum-deep);
+    border: 2px dashed rgba(255,122,26,.55);
+    border-radius: 18px;
+    padding: .9rem 1.1rem;
+  }
+  .fact .big { display: block; font-size: 1.5rem; font-weight: 600; color: var(--bone); }
+  .fact .small { color: var(--mist); font-size: .95rem; }
+
+  .panel {
+    background: var(--plum-deep);
+    border-radius: 22px;
+    padding: 1.3rem 1.4rem;
+    margin: 1.2rem 0;
+  }
+  .panel p { margin: 0 0 .6rem; }
+  .panel p:last-child { margin-bottom: 0; }
+  .treat { border-left: 8px solid var(--slime); border-radius: 8px 22px 22px 8px; }
+  .treat ul { margin: .3rem 0 0; padding-left: 1.2rem; }
+  .treat li { margin: .15rem 0; }
+  .rotation strong { color: var(--pumpkin); }
+
+  /* Sign-up form */
+  form { display: grid; gap: .9rem; }
+  label { display: grid; gap: .3rem; font-weight: 500; }
+  .opt { color: var(--mist); font-weight: 400; }
+  input, textarea {
+    font: inherit;
+    color: var(--ink, #1b0f33);
+    background: var(--bone);
+    border: 3px solid transparent;
+    border-radius: 14px;
+    padding: .7rem .9rem;
+    width: 100%;
+  }
+  textarea { min-height: 5.2rem; resize: vertical; }
+  input:focus-visible, textarea:focus-visible, button:focus-visible {
+    outline: 3px solid var(--slime);
+    outline-offset: 2px;
+  }
+  .row2 { display: grid; gap: .9rem; grid-template-columns: 1fr 1fr; }
+  @media (max-width: 620px) { .row2 { grid-template-columns: 1fr; } }
+
+  button {
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    border: 0;
+    border-radius: 999px;
+    padding: .8rem 1.6rem;
+    background: var(--pumpkin);
+    color: var(--plum-deep);
+    font-size: 1.1rem;
+    justify-self: start;
+  }
+  button:hover { background: #ff8f3d; }
+  button:disabled { opacity: .55; cursor: wait; }
+  .ghost {
+    background: transparent;
+    color: var(--mist);
+    border: 2px solid rgba(207,196,236,.5);
+    padding: .3rem .9rem;
+    font-size: .9rem;
+    font-weight: 500;
+  }
+  .ghost:hover { background: rgba(255,93,143,.18); color: var(--bone); }
+
+  .msg { min-height: 1.5rem; margin: 0; font-weight: 500; }
+  .msg.err { color: var(--berry); }
+  .msg.ok { color: var(--slime); }
+
+  /* Sign-up list */
+  .tally { color: var(--mist); margin: -.3rem 0 1rem; }
+  table { width: 100%; border-collapse: collapse; }
+  th, td { text-align: left; padding: .75rem .6rem; vertical-align: top; }
+  thead th { color: var(--mist); font-weight: 500; font-size: .95rem; border-bottom: 2px solid rgba(207,196,236,.25); }
+  tbody tr + tr td { border-top: 1px solid rgba(207,196,236,.15); }
+  td.n { font-family: var(--display); font-size: 1.6rem; color: var(--pumpkin); width: 2.6rem; padding-right: 0; }
+  tr.open td:not(.n) { color: var(--mist); font-style: italic; }
+  .act { font-weight: 600; }
+  .notes { color: var(--mist); }
+
+  @media (max-width: 620px) {
+    thead { display: none; }
+    table, tbody, tr, td { display: block; width: 100%; }
+    tbody tr { padding: .8rem 0; }
+    tbody tr + tr { border-top: 1px solid rgba(207,196,236,.15); }
+    tbody tr + tr td { border-top: 0; }
+    td { padding: .15rem 0; }
+    td.n { width: auto; }
+    td[data-label]::before { content: attr(data-label) ": "; color: var(--mist); font-weight: 400; }
+  }
+
+  .setup { background: var(--berry); color: var(--plum-deep); border-radius: 14px; padding: 1rem 1.2rem; font-weight: 500; display: none; }
+  footer { text-align: center; color: var(--mist); margin-top: 2rem; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .bats { animation: flutter 3.2s ease-in-out infinite; }
+    @keyframes flutter { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="bats" aria-hidden="true">🦇 🎃 🦇</div>
+    <h1>Class Halloween Party</h1>
+    <p class="sub">Mr. Sutton's class needs you. Claim a station, tell us what you're bringing, and we'll make it a spooky good time.</p>
+  </header>
+
+  <div class="setup" id="setup">
+    This page isn't connected yet. Paste your Google Apps Script web app URL into <code>API_URL</code> at the top of the script in this file.
+  </div>
+
+  <section class="facts" aria-label="Party details">
+    <div class="fact"><span class="big">Friday, 10/30</span><span class="small">Party starts at 1:30 PM in the classroom</span></div>
+    <div class="fact"><span class="big">Arrive by 1:20 PM</span><span class="small">Check in and set up your station before the kids come in</span></div>
+    <div class="fact"><span class="big">4 stations</span><span class="small">10 minutes each</span></div>
+    <div class="fact"><span class="big">28 kids</span><span class="small">Groups of 7 at a time</span></div>
+  </section>
+
+  <section class="panel rotation">
+    <h2>How the stations work</h2>
+    <p>Each volunteer runs one station: a treat, a fun game, an activity, or a craft. The kids rotate in groups, so <strong>plan for 7 kids to visit your station 4 times</strong>, 10 minutes each round.</p>
+    <p>Bring your supplies and materials ready to go. Need an idea? Reach out to Kelsie and we'll brainstorm.</p>
+  </section>
+
+  <section class="panel treat">
+    <h2>Treat rules</h2>
+    <p>If your activity includes a treat or prize, please keep every kiddo safe:</p>
+    <ul>
+      <li><b>Peanut-free</b> only</li>
+      <li><b>Store bought</b> food only (no homemade)</li>
+    </ul>
+  </section>
+
+  <section class="panel" id="signup">
+    <h2>Claim your station</h2>
+    <form id="form" autocomplete="off">
+      <div class="row2">
+        <label>Your name
+          <input id="name" name="name" maxlength="80" required placeholder="First and last name">
+        </label>
+        <label>Station activity
+          <input id="activity" name="activity" maxlength="120" required placeholder="Pumpkin ring toss, mummy wrap, etc.">
+        </label>
+      </div>
+      <label>Additional notes <span class="opt">(optional)</span>
+        <textarea id="notes" name="notes" maxlength="300" placeholder="Treats you're handing out, supplies you need, table or outlet requests"></textarea>
+      </label>
+      <button type="submit" id="submit">Sign me up</button>
+      <p class="msg" id="msg" role="status" aria-live="polite"></p>
+    </form>
+  </section>
+
+  <section class="panel" aria-live="polite">
+    <h2>Who's bringing what</h2>
+    <p class="tally" id="tally">Loading sign-ups...</p>
+    <table>
+      <thead>
+        <tr><th>#</th><th>Name</th><th>Activity</th><th>Additional notes</th><th></th></tr>
+      </thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </section>
+
+  <footer>Questions? Reply to Kelsie's email. Thank you for making this party special for the kids! 🕸️</footer>
+</div>
+
+<script>
+  // 1. Paste your Google Apps Script web app URL here (ends in /exec).
+  const API_URL = "https://script.google.com/macros/s/AKfycbxdDLiqrx93FbkpkMp1TsGvWlgIQzqi9tXyE7CgaegBWA4WJDRaBHYtiL8-iFwWS8ze/exec";
+  // 2. Keep this matching MAX_SPOTS in Code.gs.
+  const MAX_SPOTS = 4;
+
+  const $ = (id) => document.getElementById(id);
+  const configured = API_URL && !API_URL.startsWith("PASTE_");
+  let signups = [];
+  let busy = false;
+
+  function setMsg(text, kind) {
+    const el = $("msg");
+    el.textContent = text || "";
+    el.className = "msg" + (kind ? " " + kind : "");
+  }
+
+  function td(text, cls, label) {
+    const cell = document.createElement("td");
+    if (cls) cell.className = cls;
+    if (label) cell.dataset.label = label;
+    cell.textContent = text;
+    return cell;
+  }
+
+  function render() {
+    const body = $("rows");
+    body.textContent = "";
+    for (let i = 0; i < MAX_SPOTS; i++) {
+      const s = signups[i];
+      const tr = document.createElement("tr");
+      tr.appendChild(td(i + 1, "n"));
+      if (s) {
+        tr.appendChild(td(s.name, "", "Name"));
+        tr.appendChild(td(s.activity, "act", "Activity"));
+        tr.appendChild(td(s.notes || "", "notes", s.notes ? "Notes" : ""));
+        const actions = document.createElement("td");
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "ghost";
+        btn.textContent = "Remove";
+        btn.setAttribute("aria-label", "Remove " + s.name + "'s sign-up");
+        btn.addEventListener("click", () => removeSignup(s));
+        actions.appendChild(btn);
+        tr.appendChild(actions);
+      } else {
+        tr.className = "open";
+        const cell = td("Open station. Sign up above!");
+        cell.colSpan = 4;
+        tr.appendChild(cell);
+      }
+      body.appendChild(tr);
+    }
+    const left = Math.max(0, MAX_SPOTS - signups.length);
+    $("tally").textContent = left === 0
+      ? "All " + MAX_SPOTS + " stations are claimed. Thank you, volunteers!"
+      : signups.length + " of " + MAX_SPOTS + " stations claimed. " + left + (left === 1 ? " spot" : " spots") + " left.";
+    $("submit").disabled = busy || left === 0;
+  }
+
+  async function api(payload) {
+    const opts = payload
+      ? { method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify(payload) }
+      : { method: "GET" };
+    const res = await fetch(API_URL, opts);
+    return res.json();
+  }
+
+  async function load() {
+    if (!configured) return;
+    try {
+      const data = await api();
+      if (data.ok) { signups = data.signups; render(); }
+    } catch (e) {
+      $("tally").textContent = "Couldn't load the sign-ups. Check your connection and refresh the page.";
+    }
+  }
+
+  $("form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    if (!configured || busy) return;
+    const name = $("name").value.trim();
+    const activity = $("activity").value.trim();
+    const notes = $("notes").value.trim();
+
+    const dupe = signups.find(s => s.activity.toLowerCase() === activity.toLowerCase());
+    if (dupe && !confirm(dupe.name + " is already doing \"" + dupe.activity + "\". Sign up for the same activity anyway?")) return;
+
+    busy = true; render(); setMsg("Saving your spot...");
+    try {
+      const data = await api({ action: "add", name, activity, notes });
+      if (data.signups) signups = data.signups;
+      if (data.ok) {
+        $("form").reset();
+        setMsg("You're in, " + name + "! Please also reply all to the email to confirm.", "ok");
+      } else {
+        setMsg(data.error || "That didn't save. Please try again.", "err");
+      }
+    } catch (err) {
+      setMsg("That didn't save. Check your connection and try again.", "err");
+    }
+    busy = false; render();
+  });
+
+  async function removeSignup(s) {
+    if (busy) return;
+    if (!confirm("Remove " + s.name + " (" + s.activity + ") from the sign-up sheet?")) return;
+    busy = true; render();
+    try {
+      const data = await api({ action: "remove", id: s.id });
+      if (data.signups) signups = data.signups;
+      setMsg(data.ok ? "Sign-up removed." : (data.error || "Couldn't remove that sign-up."), data.ok ? "ok" : "err");
+    } catch (err) {
+      setMsg("Couldn't remove that sign-up. Try again.", "err");
+    }
+    busy = false; render();
+  }
+
+  if (!configured) $("setup").style.display = "block";
+  render();
+  load();
+  setInterval(() => { if (!busy && !document.hidden) load(); }, 30000);
+</script>
+</body>
+</html>
